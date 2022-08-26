@@ -1,4 +1,9 @@
-﻿namespace Lancheria
+﻿using Lancheria.Context;
+using Lancheria.Repositories;
+using Lancheria.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
+
+namespace Lancheria
 {
     public class Startup
     {
@@ -12,6 +17,20 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Registrando o Service do DBContext
+            //Pegamos a ConecctionString do appsettings.json
+            services.AddDbContext<AppDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+
+            //Transient: Cria uma nova instância do servico cada vez que um servico e solicitado do provedor de servicos. Se o servico for descartavel o escopo monitorara todas as instancias e destruira todas quando o servico for descartado
+            //Scoped: Uma nova instancia e criada a cada request
+            //Singleton: Apenas uma instancia do servico é criada se ainda não estiver registrada como uma instancia
+
+
+            //Serve para injetar instancias dos repositorios nos controllers
+            services.AddTransient<IBurgerRepository, BurgerRepository>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
+
             services.AddControllersWithViews();
         }
 
