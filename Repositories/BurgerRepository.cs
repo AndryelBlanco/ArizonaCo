@@ -13,13 +13,13 @@ namespace Lancheria.Repositories
             _context = context;
         }
 
-        public IEnumerable<Burger> Burgers => _context.Burger.Include(c => c.Category);
+        public IEnumerable<Burger> Burgers => _context.Burgers.Include(c => c.Category);
 
-        public IEnumerable<Burger> AwesomeBurgers => _context.Burger.Where(b => b.IsAwesome).Include(c => c.Category);
+        public IEnumerable<Burger> AwesomeBurgers => _context.Burgers.Where(b => b.IsAwesome).Include(c => c.Category);
 
-        public Burger GetBurgerById(int BurgerId)
+        public Burger GetBurgerById(int burgerID)
         {
-            return _context.Burger.FirstOrDefault(b => b.BurgerId == BurgerId);
+            return _context.Burgers.FirstOrDefault(l => l.BurgerId == burgerID);
         }
     }
 }

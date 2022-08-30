@@ -1,4 +1,5 @@
 ﻿using Lancheria.Context;
+using Lancheria.Models;
 using Lancheria.Repositories;
 using Lancheria.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +32,21 @@ namespace Lancheria
             services.AddTransient<IBurgerRepository, BurgerRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
 
+            //Add Scopped pq vai trabalhar a nivel de requisição
+            services.AddScoped(sp => CheckoutCart.GetCheckoutCart(sp));
+
+            //Definimos um service para usar os recursos do HTTP Context
+            //Singleton pq vale por todo tempo de vida da aplicacao
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+
             services.AddControllersWithViews();
+            
+            //Vamos habilitar o cache e o session
+            //Registramos nossos middlewares
+            services.AddMemoryCache();
+            services.AddSession();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,10 +67,18 @@ namespace Lancheria
 
             app.UseRouting();
 
+            //Ativamos o session
+            app.UseSession();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name: "categoryFilter",
+                    pattern: "Burger/{action}/{selectedCategory?}",
+                    defaults: new { Controller = "Burger", action = "List" });
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

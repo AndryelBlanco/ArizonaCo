@@ -1,0 +1,8 @@
+﻿@model Burger
+
+<div class="col-sm-4 col-md-4 col-lg-4">
+    <img src="@Model.ImageUrl" alt="@Model.BurgerName" width="200" height="200" class="img-fluid" />
+    <h4>@Model.Price.ToString("c")</h4>
+    <h3 class="mt-2">@Model.BurgerName</h3>
+    <span>@Model.DescriptionTiny</span>
+</div>

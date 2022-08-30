@@ -1,0 +1,15 @@
+﻿@model BurgerListViewModel
+
+<div>
+    <h2>@Model.CurrentCategory</h2>
+</div>
+<hr/>
+
+
+<div class="container">
+    <div class="row">
+        @foreach(var burger in Model.Burgers){
+            <partial name="_BurgerCatalog" for="@burger"/>
+        }
+    </div>
+</div>

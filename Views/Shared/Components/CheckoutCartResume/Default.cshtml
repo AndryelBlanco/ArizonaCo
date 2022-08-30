@@ -1,0 +1,12 @@
+﻿@model CheckoutCartViewModel
+
+@if(Model.CheckoutCart.CheckoutCartItens.Count > 0){
+    <a asp-controller="CheckoutCart" asp-action="index">
+        <span>
+            <img src="../../images/CheckoutCart.png" alt="Icone de carrinho de compras" width="28" height="28"/>
+            <span style="color:white">
+                @Model.CheckoutCart.CheckoutCartItens.Count
+            </span>
+        </span>
+    </a>
+}

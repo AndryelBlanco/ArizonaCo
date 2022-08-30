@@ -16,3 +16,14 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.spaced-items{
+    display: flex;
+    justify-content: space-between;
+
+    width: 100%
+}
+
+.padding-reset{
+    padding-right: 1.5rem;
+}

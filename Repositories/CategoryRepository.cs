@@ -13,6 +13,6 @@ namespace Lancheria.Repositories
             _context = context;
         }
 
-        public IEnumerable<Category> Categories => _context.Category;
+        public IEnumerable<Category> Categories => _context.Categories;
     }
 }
